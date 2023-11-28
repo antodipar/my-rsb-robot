@@ -1,5 +1,5 @@
 from robocorp.tasks import task
-from robocorp import browser
+from robocorp import browser, vault
 
 from RPA.HTTP import HTTP
 from RPA.Excel.Files import Files
@@ -28,9 +28,10 @@ def open_the_intranet_website():
 
 def log_in():
     """Fills in the login form and clicks the 'Log in' button"""
+    secret = vault.get_secret('robotsparebin')
     page = browser.page()
-    page.fill("#username", "maria")
-    page.fill("#password", "thoushallnotpass")
+    page.fill("#username", secret["username"])
+    page.fill("#password", secret["password"])
     page.click("button:text('Log in')")
 
 
